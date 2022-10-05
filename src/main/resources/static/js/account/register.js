@@ -35,9 +35,11 @@ registerButton.onclick = () => {
     dataType: "json",               // json와 text 등을 사용함 주로 json
     success: (response) => {        // 성공시 실행될 메소드
       alert("회원가입 요청 성공");
+      console.log(response);
     },
     error: (error) => {             // 실패시 실행될 메소드
       alert("회원가입 요청 실패");
+      console.log(error.responseJSON);
     }
   });
 }
