@@ -34,12 +34,27 @@ registerButton.onclick = () => {
     // JSON.parse()     - JSOn 문자열을 js 객체로 변환
     dataType: "json",               // json와 text 등을 사용함 주로 json
     success: (response) => {        // 성공시 실행될 메소드
-      alert("회원가입 요청 성공");
       console.log(response);
     },
     error: (error) => {             // 실패시 실행될 메소드
-      alert("회원가입 요청 실패");
-      console.log(error.responseJSON);
+      console.log(error.responseJSON.data);
+      loadErrorMessage(error.responseJSON.data)
     }
   });
+}
+
+function loadErrorMessage(errors) {
+  const errorList = document.querySelector(".errors"); // 숨겨진 객체?
+  const errorMsgs = document.querySelector(".error-msgs");
+  const errorArray = Object.values(errors); // JSON 형태에서 keys, values, entries(둘 다) 리스트 형태로 변환
+  
+  errorMsgs.innerHTML = "";
+
+  errorArray.forEach(error => {
+    errorMsgs.innerHTML += `
+      <li>${error}</li>
+    `;
+  });
+
+  errorList.classList.remove("errors-invisible");
 }
