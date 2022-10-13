@@ -6,7 +6,7 @@
 <mapper namespace="com.stussy.stussyclone20220930oh.repository.AccountRepository">
     <resultMap id="role" type="com.stussy.stussyclone20220930oh.domain.Role">
         <result property="id" column="id"/>
-        <result property="name" column="role_id"/>
+        <result property="name" column="role_name"/>
         <result property="create_date" column="create_date"/>
         <result property="update_date" column="update_date"/>
     </resultMap>
@@ -20,10 +20,10 @@
         <result property="role_id" column="role_id"/>
         <result property="create_date" column="create_date"/>
         <result property="update_date" column="update_date"/>
-        <collection property="role" resultMap="role"/>
+        <collection property="role" resultMap="role"/> <!-- user role -->
     </resultMap>
 
-    <select id="findUserByEmail" parameterType="String" resultMap="user">
+    <select id="findUserByEmail" parameterType="String" resultMap="user"> <!-- 조인할 땐, resultMap 사용 -->
         select
             um.id,
             um.email,
@@ -31,7 +31,7 @@
             um.name,
             um.provider,
             um.role_id,
-            rm.name,
+            rm.name as role_name,
             um.create_date,
             um.update_date
         from
@@ -41,4 +41,19 @@
             um.email = #{email}
 
     </select>
+    <!-- insert, update, delete 는 row의 갯수라서 int // select만 rseultMap Type -->
+    <insert id="saveUser" parameterType="com.stussy.stussyclone20220930oh.domain.User">
+        insert into
+            user_mst
+        values(
+            0,
+            #{email},
+            #{password},
+            #{name},
+            #{provider},
+            #{role_id},
+            now(),
+            now()
+        )
+    </insert>
 </mapper>

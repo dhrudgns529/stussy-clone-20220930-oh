@@ -22,7 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //
                 .formLogin()
-                .loginPage("/account/login") // 로그인 페이지
+                .loginPage("/account/login") // 로그인 페이지 Get 요청
+                .loginProcessingUrl("/account/login") // service Post 요청
                 .defaultSuccessUrl("/index"); // 로그인 후 이동 할 페이지가 없으면 이 주소로 이동
     }
 }

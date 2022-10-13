@@ -33,12 +33,14 @@ registerButton.onclick = () => {
     // JSON.stringify() - js 객체를 JSON 문자열로 변환
     // JSON.parse()     - JSOn 문자열을 js 객체로 변환
     dataType: "json",               // json와 text 등을 사용함 주로 json
-    success: (response) => {        // 성공시 실행될 메소드
+    success: (response, textStatus, request) => {        // 성공시 실행될 메소드
       console.log(response);
+      const successURI = request.getResponseHeader("Location");
+      location.replace(successURI + "?email=" + response.data); // Location 지정한 곳 + response.data까지
     },
     error: (error) => {             // 실패시 실행될 메소드
       console.log(error.responseJSON.data);
-      loadErrorMessage(error.responseJSON.data)
+      loadErrorMessage(error.responseJSON.data);
     }
   });
 }
