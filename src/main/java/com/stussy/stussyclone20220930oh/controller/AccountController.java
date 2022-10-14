@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccountController {
 
     @GetMapping("/account/login")
-    public String login(Model model, @RequestParam @Nullable String email) { // Nullable 필수가 아니다.
-        model.addAttribute("email", email == null ? "" : email);
+    public String login(Model model,
+                        @RequestParam @Nullable String email,
+                        @RequestParam @Nullable String error) { // Nullable 필수가 아니다. 값이 들어오지 않아도 상관없다.
+        model.addAttribute("email", email == null ? "" : email); // null이면 "" 아니면 해당
+        model.addAttribute("error", error == null ? "" : error);
         return "account/login";
     }
 
