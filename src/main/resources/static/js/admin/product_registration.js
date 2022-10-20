@@ -59,6 +59,27 @@ class ProductMst { // js는 자기자신을 가르키는 this를 써야함
   }
 }
 
+class CommonApi {
+  getCategoryList() {
+    let responseResult = null;
+
+    $.ajax ({
+      async: false,
+      type: "get",
+      url: "/api/admin/product/category",
+      dataType: "json",
+      success: (response) => {
+        responseResult = response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
+    return responseResult;
+  }
+}
+
 class RegisterApi {
   createProductRequest (productMst) {
     let responseResult = null;
@@ -156,7 +177,10 @@ class RegisterEventService {
       const productMst = new ProductMst(category, name, price, simpleInfo, detailInfo, optionInfo, managementInfo, shippingInfo);
 
       const registerApi = new RegisterApi();
-      registerApi.createProductRequest(productMst.getObject());
+      if(registerApi.createProductRequest(productMst.getObject())) {
+        alert("상품 등록 완료");
+        location.reload();
+      };
     }
   }
 }
@@ -177,11 +201,27 @@ class RegisterService { // 싱글톤 패턴 : 메모리 영역에서 한번의 n
   loadRegister() {
   }
 
+  getCategoryList() {
+    const commonApi = new CommonApi();
+    const productCategoryList = commonApi.getCategoryList();
+
+    const productCategory = document.querySelector(".product-category");
+    productCategory.innerHTML = `<option value="none">상품 종류</option>`;
+
+
+    productCategoryList.forEach(category => {
+      productCategory.innerHTML += `
+      <option value="${category.id}">${category.name}</option>      
+      `;      
+    });
+  }
+
   setRegisterHeaderEvent() {
     new RegisterEventService();
   }
 }
 
 window.onload = () => {
+  RegisterService.getInstance().getCategoryList();
   RegisterService.getInstance().setRegisterHeaderEvent();
 }

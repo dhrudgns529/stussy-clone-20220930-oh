@@ -2,10 +2,12 @@ package com.stussy.stussyclone20220930oh.service.admin;
 
 import com.stussy.stussyclone20220930oh.dto.admin.CategoryResponseDto;
 import com.stussy.stussyclone20220930oh.dto.admin.ProductRegisterReqDto;
+import com.stussy.stussyclone20220930oh.exception.CustomInternalServerErrorException;
 import com.stussy.stussyclone20220930oh.repository.admin.ProductManagementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,12 +18,20 @@ public class ProductManagementServiceImpl implements ProductManagementService{
 
     @Override
     public List<CategoryResponseDto> getCategoryList() throws Exception {
+        List<CategoryResponseDto> categoryResponseDtos = new ArrayList<CategoryResponseDto>();
 
-        return null;
+        productManagementRepository.getCategoryList().forEach(category -> {
+            categoryResponseDtos.add(category.toDto());
+        });
+        return categoryResponseDtos;
     }
 
     @Override
     public void registerMst(ProductRegisterReqDto productRegisterReqDto) throws Exception {
+        if (productManagementRepository.saveProductMst(productRegisterReqDto.toEntity()) == 0) {
+            throw new CustomInternalServerErrorException("상품 등록 실패");
+        };
+
 
     }
 }
