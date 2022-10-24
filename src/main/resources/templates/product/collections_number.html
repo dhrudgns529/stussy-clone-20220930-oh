@@ -8,7 +8,8 @@
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/header.css">
-  <link rel="stylesheet" href="/static/css/account.css">
+  
+  <link rel="stylesheet" href="/static/css/collections_number.css">
 </head>
 <body>
   <div id="container">
@@ -55,36 +56,33 @@
       <script src="/static/js/header/header.js"></script>
     </header>
     <main>
-      <div class="login">
-        <h1 class="account-title">ACCOUNT</h1>
-        <div class="account-container">
-          <section class="account-current">
-            <h2 class="account-subtitle">신규 회원가입</h2>
-            <div class="errors errors-invisible">
-              <ul class="error-msgs">
-                
-              </ul>
-            </div>
-            <div class="account-name">
-              <div class="account-name-half">
-                <input class="account-input" type="text" placeholder="이름">
-              </div>
-              <div class="account-name-half">
-                <input class="account-input" type="text" placeholder="성">
-              </div>
-            </div>
-            <input class="account-input" type="email" name="username" placeholder="이메일">
-            <input class="account-input" type="password" name="password" placeholder="비밀번호">
-            <button class="btn account-button" type="button">확인</button>
-            <a class="login-return-link" href="/account/login">로그인으로 돌아가기</a>
-          </section>
-        </div>
-      </div>
+      <ul class="page-number-list">
+        <!-- <a href="javascript:void(0)"><li>&#60;</li></a>
+        <a href="javascript:void(0)"><li>1</li></a>
+        <a href="javascript:void(0)"><li>2</li></a>
+        <a href="javascript:void(0)"><li>3</li></a>
+        <a href="javascript:void(0)"><li>4</li></a>
+        <a href="javascript:void(0)"><li>5</li></a>
+        <a href="javascript:void(0)"><li>&#62;</li></a> -->
+      </ul>
+      <ul class="collection-products">
+        <li class="collection-product">
+          <div class="product-img">
+            <img src="/static/images/product/product1.png" alt="">
+          </div>
+          <div class="product-name">
+            상품명
+          </div>
+          <div class="product-price">
+            100000원
+          </div>
+        </li>
+      </ul>
     </main>
     <footer>
 
     </footer>
   </div>
-  <script src="/static/js/account/register.js"></script>
+  <script src="/static/js/product/collections_number.js"></script>
 </body>
 </html>
