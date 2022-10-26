@@ -19,13 +19,13 @@ import java.util.Map;
 public class ValidationAop {
 
     // 맨 앞 *은 타입 ..은 하위 폴더 *은 모든 메서드
-    @Pointcut("execution(* com.stussy.stussyclone20220930oh..*Api.*(..))")
+    @Pointcut("execution(* com.stussy.stussyclone20220930oh.api.AccountApi.*(..))")
     private void executionPointCut() {}
 
     @Pointcut("@annotation(com.stussy.stussyclone20220930oh.aop.annotation.ValidAspect)")
     private void annotationPointCut() {}
 
-    @Around("annotationPointCut()")
+    @Around("executionPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
 
