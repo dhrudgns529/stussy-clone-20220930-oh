@@ -100,7 +100,7 @@ class CollectionsService {
       collectionProducts.innerHTML += `
         <li class="collection-product">
             <div class="product-img">
-              <img src="/static/images/product/product1.png" alt="">
+              <img src="/static/upload/product/${product.mainImg}" alt="">
             </div>
             <div class="product-name">
               ${product.productName}
@@ -115,6 +115,6 @@ class CollectionsService {
 }
 
 window.onload = () => {
-  console.log(CollectionsService.getInstance().loadCollections());
+  CollectionsService.getInstance().loadCollections();
   new PageScroll();
 }
