@@ -1,6 +1,8 @@
 package com.stussy.stussyclone20220930oh.config;
 
 import com.stussy.stussyclone20220930oh.security.AuthFailureHandler;
+import com.stussy.stussyclone20220930oh.service.PrincipalOauth2Service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PrincipalOauth2Service principalOauth2Service;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() { // 복호화
@@ -38,6 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/account/login") // 로그인 페이지 Get 요청
                 .loginProcessingUrl("/account/login") // service Post 요청
                 .failureHandler(new AuthFailureHandler())
+                .and() // oauth2 로그인 설정
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(principalOauth2Service)
+                .and()
                 .defaultSuccessUrl("/index"); // 로그인 후 이동 할 페이지가 없으면 이 주소로 이동
     }
 }
