@@ -8,4 +8,5 @@ public interface AccountRepository {
 // 구현부는 mappers의 xml이다.
     public User findUserByEmail(String email) throws Exception;
     public int saveUser(User user) throws Exception;
+    public int updateProvider(User user) throws Exception;
 }

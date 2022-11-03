@@ -67,13 +67,15 @@ public class PrincipalOauth2Service extends DefaultOAuth2UserService {
                     .build();
 
             accountRepository.saveUser(user);
-        }else if(user.getProvider() == null) {
-            // 연동
-
+        }else if(user.getProvider() == null) { // 연동안된 아이디를 연동
+            user.setProvider(provider);
+            accountRepository.updateProvider(user);
+        }else if(!user.getProvider().contains(provider)) { // google, naver 같이 연동 // contains  <- 포함되어 있으면
+            user.setProvider(user.getProvider() + ", " + provider);
+            accountRepository.updateProvider(user);
         }
 
-        System.out.println(user);
-        return new PrincipalDetails(user, attributes);
+        return new PrincipalDetails(user, oauth2attributes);
     }
 
 }
