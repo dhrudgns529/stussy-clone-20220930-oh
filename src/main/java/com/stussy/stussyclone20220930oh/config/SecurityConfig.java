@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/account/login") // 로그인 페이지 Get 요청
                 .loginProcessingUrl("/account/login") // service Post 요청
                 .failureHandler(new AuthFailureHandler())
+                .defaultSuccessUrl("/index")
                 .and() // oauth2 로그인 설정
                 .oauth2Login()
                 .userInfoEndpoint()

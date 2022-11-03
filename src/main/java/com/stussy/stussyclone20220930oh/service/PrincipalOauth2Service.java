@@ -34,6 +34,7 @@ public class PrincipalOauth2Service extends DefaultOAuth2UserService {
         try {
             principalDetails = getPrincipalDetails(provider, oAuth2User.getAttributes());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new OAuth2AuthenticationException("login failed");
         }
 
@@ -45,13 +46,13 @@ public class PrincipalOauth2Service extends DefaultOAuth2UserService {
         Map<String, Object> oauth2attributes = null;
         String email = null;
 
-        if(provider.equalsIgnoreCase("google")) {
+        if(provider.equalsIgnoreCase("google")) { // 대소문자 구분 안하고 비교
             oauth2attributes = attributes;
         }else if(provider.equalsIgnoreCase("naver")) {
             oauth2attributes =(Map<String, Object>) attributes.get("response");
         }
 
-        email =(String) oauth2attributes.get("email");
+        email = (String) oauth2attributes.get("email");
 
         user = accountRepository.findUserByEmail(email);
 
@@ -60,7 +61,7 @@ public class PrincipalOauth2Service extends DefaultOAuth2UserService {
             user = User.builder()
                     .email(email)
                     .password(new BCryptPasswordEncoder().encode(UUID.randomUUID().toString()))
-                    .name((String)attributes.get("name"))
+                    .name((String)oauth2attributes.get("name"))
                     .provider(provider)
                     .role_id(1)
                     .build();
@@ -71,7 +72,7 @@ public class PrincipalOauth2Service extends DefaultOAuth2UserService {
 
         }
 
-
+        System.out.println(user);
         return new PrincipalDetails(user, attributes);
     }
 
